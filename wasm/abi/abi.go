@@ -79,7 +79,7 @@ func main() {
 	}
 	abiBytes, err := abi.Pack("put","pdx","123")
 	if err != nil {
-		fmt.Println("abi Pack err", err)
+		fmt.Println("abi Pack err233", err)
 	}
 	client, err := eth.Connect(host)
 	if err != nil {
