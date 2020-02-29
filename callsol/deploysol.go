@@ -102,7 +102,7 @@ func main() {
 		log.Fatalln("2", err)
 	}
 
-	client, err := ethclient.Dial("http://39.100.39.84:30218")
+	client, err := ethclient.Dial("http://127.0.0.1:8547")
 	if err != nil {
 		log.Fatalln("3", err)
 	}

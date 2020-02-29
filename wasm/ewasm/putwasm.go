@@ -28,8 +28,8 @@ func PutWasm(privKey string, client *eth.Client, to common.Address) {
 			big.NewInt(0),
 			90000000,
 			new(big.Int).Mul(big.NewInt(1e9), big.NewInt(18)),
-			[]byte("put:pdx,5555")),
-		types.NewEIP155Signer(big.NewInt(1000004)),
+			[]byte("put:pdx,222")),
+		types.NewEIP155Signer(big.NewInt(739)),
 		pri,
 	)
 	if err != nil {

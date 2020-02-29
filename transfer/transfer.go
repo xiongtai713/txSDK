@@ -28,12 +28,13 @@ const (
 	sendDuration  = time.Minute * 60000000
 	nonceTicker   = time.Minute * 10 //多久重新查一次nonce （note:此处应该大于1处， 否则ticker会不断执行）
 	sleepDuration = time.Minute * 1  //查完nonce后休眠时间（1处）
-	txNum         = 1
+	txNum         = 10
 )
 
 var privKeys = []string{
 	//"a9f1481564399443bb39188d3f8da55585c9238ab175010b81e7a28956559381",
-     "d29ce71545474451d8292838d4a0680a8444e6e4c14da018b4a08345fb2bbb84",
+    // "d29ce71545474451d8292838d4a0680a8444e6e4c14da018b4a08345fb2bbb84",
+    "d29ce71545474451d8292838d4a0680a8444e6e4c14da018b4a08345fb2bbb84",
 }
 
 func main() {
@@ -64,8 +65,10 @@ func sendTestTx(privKey, flag string) {
 	//proxy := "http://39.100.92.188:9999"
 	//token := "eyJhbGciOiJFUzI1NiJ9.eyJpYXQiOjE1NzQ2NzM3ODIsIkZSRUUiOiJUUlVFIn0.DARdyLtPRhT9eNPpoOi4KIno3ZC-UTQ2D48yiBdOXkYBjaKjdiggJUVzoVNvTEnRqzaeBP8WizIp_ZMo_Eh_JA"
 	//if client, err := eth.Connect("http://utopia-chain-739:8545", proxy, token); err != nil {
-	if client, err := eth.Connect("http://127.0.0.1:8547"); err != nil {
-		fmt.Printf(err.Error())
+	//if client, err := eth.Connect("http://47.92.137.120:30402"); err != nil {
+		if client, err := eth.Connect("http://127.0.0.1:8547"); err != nil {
+
+			fmt.Printf(err.Error())
 		return
 	} else {
 		//addr: 0xa2b67b7e4489549b855e423068cbded55f7c5daa
@@ -82,10 +85,11 @@ func sendTestTx(privKey, flag string) {
 				fmt.Printf("nonce err: %s", err.Error())
 				//return
 			} else {
-				amount := big.NewInt(0).Mul(big.NewInt(1), big.NewInt(1e18))
-				//amount := big.NewInt(7)
+				//amount := big.NewInt(0).Mul(big.NewInt(1), big.NewInt(1e18))
+
+				amount := big.NewInt(7)
 				gasLimit := uint64(21000)
-				gasPrice := big.NewInt(9000000000) //todo 此处很重要，不可以太低，可能会报underprice错误，增大该值就没有问题了
+				gasPrice := big.NewInt(100000000000) //todo 此处很重要，不可以太低，可能会报underprice错误，增大该值就没有问题了
 
 				timer := time.NewTimer(sendDuration)
 				ticker := time.NewTicker(nonceTicker)
