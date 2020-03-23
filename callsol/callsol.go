@@ -3,11 +3,12 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/ethereum/go-ethereum"
+	"github.com/ethereum/go-ethereum/accounts/abi"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/ethclient"
 	"log"
-	"pdx-chain"
-	"pdx-chain/accounts/abi"
-	"pdx-chain/common"
-	"pdx-chain/ethclient"
+
 	"strings"
 )
 

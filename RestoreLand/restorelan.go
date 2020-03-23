@@ -28,7 +28,10 @@ func main() {
 	gasLimit := uint64(4712388)
 	gasPrice := big.NewInt(240000000000) //todo 此处很重要，不可以太低，可能会报underprice错误，增大该值就没有问题了
 	//只有这个账户可以发恢复大陆合约
-	privKey, err := crypto.HexToECDSA("d29ce71545474451d8292838d4a0680a8444e6e4c14da018b4a08345fb2bbb84")
+	//de2f935c24ba2af4fa37c7794b944803d3c44992c04330bd4b80631ea24397c6
+	//privKey, err := crypto.HexToECDSA("d29ce71545474451d8292838d4a0680a8444e6e4c14da018b4a08345fb2bbb84")
+
+	privKey, err := crypto.HexToECDSA("d8f9556d406e09b2a692e91b849705869df7c8b6cc02d650a0048cd4ad3884ee")
 	if err != nil {
 		fmt.Printf(err.Error())
 		return

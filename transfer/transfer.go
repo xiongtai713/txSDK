@@ -22,13 +22,13 @@ import (
 const (
 	//host         = "http://39.100.34.235:30074"
 	//host         = "http://39.100.93.177:30036"
-	//host = "http://127.0.0.1:8547"
-	host = "http://39.98.63.34:30402"
+	host = "http://127.0.0.1:8547"
+	//host = "http://39.98.63.34:30402"
 	//host         = "http://10.0.0.110:8545"
 	sendDuration  = time.Minute * 60000000
 	nonceTicker   = time.Minute * 10 //多久重新查一次nonce （note:此处应该大于1处， 否则ticker会不断执行）
 	sleepDuration = time.Minute * 1  //查完nonce后休眠时间（1处）
-	txNum         = 10
+	txNum         = 1
 )
 
 var privKeys = []string{
@@ -87,7 +87,7 @@ func sendTestTx(privKey, flag string) {
 			} else {
 				//amount := big.NewInt(0).Mul(big.NewInt(1), big.NewInt(1e18))
 
-				amount := big.NewInt(7)
+				amount := big.NewInt(0).Mul(big.NewInt(100),big.NewInt(1e18))
 				gasLimit := uint64(21000)
 				gasPrice := big.NewInt(100000000000) //todo 此处很重要，不可以太低，可能会报underprice错误，增大该值就没有问题了
 
@@ -120,7 +120,7 @@ func sendTestTx(privKey, flag string) {
 						//n1 := rand.Int31n(9)
 						//n2 := rand.Int31n(9)
 						//to := common.HexToAddress(fmt.Sprintf("0x08b299d855734914cd7b19eea60dc84b%d25680f%d", n1, n2))
-						to := common.HexToAddress("0x2C393b0723177801Ba69425C087D10E8F4C558FF")
+						to := common.HexToAddress("0xDBd359ad6a6084AF32Bd0315e6f23DC183427A48")
 						fmt.Printf("to:%s\n", to.String())
 						tx := types.NewTransaction(nonce, to, amount, gasLimit, gasPrice, nil)
 						//signer := types.HomesteadSigner{}

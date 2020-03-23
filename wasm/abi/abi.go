@@ -67,7 +67,7 @@ var abibyte = `[
 ]`
 
 var (
-	host     = "http://127.0.0.1:8547"
+	host     = "http://10.0.0.138:34321"
 	privKeys = "d29ce71545474451d8292838d4a0680a8444e6e4c14da018b4a08345fb2bbb84"
 )
 
@@ -91,7 +91,7 @@ func main() {
 
 	nonce, _ := client.EthClient.PendingNonceAt(context.TODO(), from)
 
-	to := common.HexToAddress("0x7d8f6f67f44a60c803e56d69decde47ebd4d1a28")
+	to := common.HexToAddress("0x6e0d7af8a1291c55297378c085cb92731c4a52f9")
 
 	tx := types.NewTransaction(nonce, to, new(big.Int), 900000, big.NewInt(18).Mul(big.NewInt(18), big.NewInt(1e9)), abiBytes)
 
