@@ -69,11 +69,11 @@ var privKeys = []string{
 
 var adds = []string{
 
-	"0x1ceb7edecea8d481aa315b9a51b65c4def9b3dc6",
-	"0xf51dd0fa6b08e15b9edda06336a6198f52e8208d",
-	"0x9b620503368dc49e1687359f1b0c18c730aa7fda",
-	"0x0eb92bf527fee9d6aea7280070e507e30e5871b9",
-	"0x9a7a9879e1f0075c5744568bba87a8761142137a",
+	//"0x1ceb7edecea8d481aa315b9a51b65c4def9b3dc6",
+	//"0xf51dd0fa6b08e15b9edda06336a6198f52e8208d",
+	//"0x9b620503368dc49e1687359f1b0c18c730aa7fda",
+	//"0x0eb92bf527fee9d6aea7280070e507e30e5871b9",
+	//"0x9a7a9879e1f0075c5744568bba87a8761142137a",
 
 
 
@@ -81,9 +81,9 @@ var adds = []string{
 
 
 
-	//"0x42495a0d681896C3aB8a93E14e9Ec6f84509B820",
-	//"0xDBd359ad6a6084AF32Bd0315e6f23DC183427A48",
-	//"0x8cD1c58b370437328B63A3F57B40DdE2BEFC9599",
+	"0x42495a0d681896C3aB8a93E14e9Ec6f84509B820",
+	"0xDBd359ad6a6084AF32Bd0315e6f23DC183427A48",
+	"0x8cD1c58b370437328B63A3F57B40DdE2BEFC9599",
 	//"0xe9C70d0807E7d22CDB4cc7D538b45356c7793f9B",
 	//"0xe19E8a6a5807947bf2A9D325bc2aB085330e6053",
 	//"0x7E1ac35d799606F3b67f2b1834045B67772D58FC",
@@ -10117,7 +10117,7 @@ func sendTestTx(privKey, flag string) {
 	//proxy := "http://39.100.92.188:9999"
 	//token := "eyJhbGciOiJFUzI1NiJ9.eyJpYXQiOjE1NzQ2NzM3ODIsIkZSRUUiOiJUUlVFIn0.DARdyLtPRhT9eNPpoOi4KIno3ZC-UTQ2D48yiBdOXkYBjaKjdiggJUVzoVNvTEnRqzaeBP8WizIp_ZMo_Eh_JA"
 	//if client, err := eth.Connect("http://utopia-chain-739:8545", proxy, token); err != nil {
-	if client, err := eth.Connect("http://39.98.67.5:30402"); err != nil {
+	if client, err := eth.Connect("http://127.0.0.1:8547"); err != nil {
 	//if client, err := eth.Connect("http://47.92.137.120:30402"); err != nil {
 
 	fmt.Printf(err.Error())

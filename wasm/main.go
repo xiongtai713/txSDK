@@ -10,6 +10,7 @@ import (
 var (
 	path  = "/Users/liu/rust/hello-wasm/pkg/hello_wasm_bg.wasm"
 	path2 = "/Users/liu/rust/ewasm-rust-demo/hello-wasm-abi/pkg/hello_wasm_abi_bg.wasm"
+	path3 = "/Users/liu/Desktop/11/hello.sol"
 	//host     = "http://39.100.84.63:8545"
 	host     = "http://127.0.0.1:8549"
 	privKeys = "d29ce71545474451d8292838d4a0680a8444e6e4c14da018b4a08345fb2bbb84"
@@ -28,11 +29,11 @@ func main() {
 		return
 	}
 
-	//deploy(client)
+	deploy(client)
 
-	to := common.HexToAddress("0x6e0d7af8a1291c55297378c085cb92731c4a52f9")
+	//to := common.HexToAddress("0x6e0d7af8a1291c55297378c085cb92731c4a52f9")
 	//put(client, to)
-	get(client, to)
+	//get(client, to)
 }
 
 func deploy(client *eth.Client) {
@@ -47,3 +48,5 @@ func put(client *eth.Client, to common.Address) {
 func get(client *eth.Client, to common.Address) {
 	ewasm.GetWasm(client, to)
 }
+
+

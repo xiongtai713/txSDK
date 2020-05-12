@@ -77,6 +77,7 @@ func main() {
 	if err != nil {
 		fmt.Println("abi JSON err", err)
 	}
+
 	abiBytes, err := abi.Pack("put","pdx","123")
 	if err != nil {
 		fmt.Println("abi Pack err233", err)

@@ -28,7 +28,7 @@ func toHexInt(n *big.Int) string {
 
 // Connect creates a client that uses the given host.
 func Connect(host string, proxy ... string) (*Client, error) {
-	rpcClient, err := rpc.Dial(host)
+	rpcClient, err := rpc.Dial(host,proxy...)
 	if err != nil {
 		return nil, err
 	}
