@@ -17,7 +17,7 @@ func main() {
 	//proxy := "http://test.blockfree.pdx.ltd"
 	//token := "eyJhbGciOiJFUzI1NiJ9.eyJpYXQiOjE1NzQ4NDQwODcsIkZSRUUiOiJUUlVFIn0.lVPyP9xJ2iurl1_-UvdGXFWBGP65qS-NSqN5giUOpkZBvaQ8LO-X5MIP3-A1aUoV-0E3x9ucnMU6YCUUH89PCQ"
 	//client, err := eth.Connect("http://utopia-chain-739:8545", proxy, token)
-	client, err := eth.Connect("http://127.0.0.1:8547")
+	client, err := eth.Connect("http://127.0.0.1:8552")
 	//client, err := eth.Connect("http://47.92.137.120:30402")
 	//client, err := eth.Connect("http://39.98.67.5:30402")
 
@@ -31,7 +31,7 @@ func main() {
 	//de2f935c24ba2af4fa37c7794b944803d3c44992c04330bd4b80631ea24397c6
 	//privKey, err := crypto.HexToECDSA("d29ce71545474451d8292838d4a0680a8444e6e4c14da018b4a08345fb2bbb84")
 
-	privKey, err := crypto.HexToECDSA("d8f9556d406e09b2a692e91b849705869df7c8b6cc02d650a0048cd4ad3884ee")
+	privKey, err := crypto.HexToECDSA("d29ce71545474451d8292838d4a0680a8444e6e4c14da018b4a08345fb2bbb84")
 	if err != nil {
 		fmt.Printf(err.Error())
 		return
@@ -56,7 +56,7 @@ func main() {
 	bytes, _ := json.Marshal(vote)
 	tx := types.NewTransaction(uint64(nonce), to, amount, gasLimit, gasPrice, bytes)
 	//EIP155 signer
-	signer := types.NewEIP155Signer(big.NewInt(739))
+	signer := types.NewEIP155Signer(big.NewInt(738))
 	//signer := types.HomesteadSigner{}
 	signedTx, _ := types.SignTx(tx, signer, privKey)
 	// client.EthClient.SendTransaction(context.TODO(), signedTx)

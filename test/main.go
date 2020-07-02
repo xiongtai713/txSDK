@@ -1,25 +1,30 @@
 package main
 
 import (
-	"flag"
-	"fmt"
-	_ "net/http/pprof"
-	_ "runtime/pprof"
+
+	"github.com/multiformats/go-multiaddr"
 )
 
+//16*8+20
 
 func main() {
-	flag.Usage= func() {  //输入 ./main -help 会显示这里的打印
-		fmt.Println("输入ip -s ip")
-
-	}
-	var e string
-	var s= flag.String("s","liu","ip")  // 使用方法 ./main -s nihao
-
-	flag.StringVar(&e,"e","jiao","地址")  //./main -e xxxx
-
-	flag.Parse()  //解析flag
-	fmt.Println(*s,e)
-	fmt.Println(flag.Args()) //使用方法 ./main 直接输入参数 []string
+	newMultiaddr, _ := NewMultiaddr("/ip4/0.0.0.0/tcp/9000")
 
 }
+
+//func PubkeyID(pub *ecdsa.PublicKey) discover.NodeID {
+//	var id discover.NodeID
+//	pbytes := elliptic.Marshal(pub.Curve, pub.X, pub.Y)
+//	if len(pbytes)-1 != len(id) {
+//		panic(fmt.Errorf("need %d bit pubkey, got %d bits", (len(id)+1)*8, len(pbytes)))
+//	}
+//	copy(id[:], pbytes[1:])
+//	return id
+//}
+//
+//func rlpHash(x interface{}) (h common.Hash) {
+//	hw := sha3.NewKeccak256()
+//	rlp.Encode(hw, x)
+//	hw.Sum(h[:0])
+//	return h
+//}

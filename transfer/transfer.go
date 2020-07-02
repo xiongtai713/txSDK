@@ -27,14 +27,19 @@ const (
 	//host         = "http://10.0.0.110:8545"
 	sendDuration  = time.Minute * 60000000
 	nonceTicker   = time.Minute * 10  //多久重新查一次nonce （note:此处应该大于1处， 否则ticker会不断执行）
-	sleepDuration = time.Minute * 100 //查完nonce后休眠时间（1处）
-	txNum         = -1
+	sleepDuration = time.Minute * 1000 //查完nonce后休眠时间（1处）
+	txNum         = 2
 )
 
 var privKeys = []string{
 	//"a9f1481564399443bb39188d3f8da55585c9238ab175010b81e7a28956559381",
 	// "d29ce71545474451d8292838d4a0680a8444e6e4c14da018b4a08345fb2bbb84",
-	"d29ce71545474451d8292838d4a0680a8444e6e4c14da018b4a08345fb2bbb84",
+	//"009f1dfe52be1015970d9087de0ad2a98f4c68f610711d1533aa21a71ccc8f4a", //from:0x00CFc66BBD69fb964df1C9782062D4282FfF0cda
+//"69192206e447dbc8b6627d7beb540e6c606c5b94afa9ebc00734ff404a1e5617",
+
+	"d29ce71545474451d8292838d4a0680a8444e6e4c14da018b4a08345fb2bbb84", //086
+
+	//"71fa69bf38e20b32fbf980645eee0496dd13c85dceb4b3e2c66514ceed27f40e",
 }
 
 func main() {
@@ -62,11 +67,11 @@ func main() {
 }
 
 func sendTestTx(privKey, flag string) {
-	//proxy := "http://39.100.92.188:9999"
-	//token := "eyJhbGciOiJFUzI1NiJ9.eyJpYXQiOjE1NzQ2NzM3ODIsIkZSRUUiOiJUUlVFIn0.DARdyLtPRhT9eNPpoOi4KIno3ZC-UTQ2D48yiBdOXkYBjaKjdiggJUVzoVNvTEnRqzaeBP8WizIp_ZMo_Eh_JA"
-	//if client, err := eth.Connect("http://utopia-chain-739:8545", proxy, token); err != nil {
-	//if client, err := eth.Connect("http://47.92.137.120:30402"); err != nil {
-	if client, err := eth.Connect("http://127.0.0.1:8547"); err != nil {
+	//proxy := "http://10.0.0.241:9999"
+	//token := "eyJhbGciOiJFUzI1NiJ9.eyJpYXQiOjE1ODk5NzQ2NzIsIkZSRUUiOiJUUlVFIn0.sWYZ6awd8yRNX9iG5o7Ls4Uop5nfZrUtuprx9hwKxw2fS5zQtxunY11bccJ_h29VfnFMqyvaVvI9Tu3R0USlwQ"
+	//if client, err := eth.Connect("http://utopia-chain-1001:8545", proxy, token); err != nil {
+	if client, err := eth.Connect(host); err != nil {
+	//if client, err := eth.Connect("http://10.0.0.219:33333"); err != nil {
 
 		fmt.Printf(err.Error())
 		return
@@ -85,11 +90,13 @@ func sendTestTx(privKey, flag string) {
 				fmt.Printf("nonce err: %s", err.Error())
 				//return
 			} else {
-				//amount := big.NewInt(0).Mul(big.NewInt(1), big.NewInt(1e18))
+				fmt.Println("nonce",nonce)
+				nonce=1
+				amount := big.NewInt(0).Mul(big.NewInt(1), big.NewInt(100))
 
-				amount := big.NewInt(0).Mul(big.NewInt(100), big.NewInt(1e18))
-				gasLimit := uint64(21000)
-				gasPrice := big.NewInt(100000000000) //todo 此处很重要，不可以太低，可能会报underprice错误，增大该值就没有问题了
+				//amount := big.NewInt(0).Mul(big.NewInt(1), big.NewInt(1e18))
+				gasLimit := uint64(22000)
+				gasPrice := new(big.Int).Mul(big.NewInt(1e9),big.NewInt(5000)) //todo 此处很重要，不可以太低，可能会报underprice错误，增大该值就没有问题了
 
 				timer := time.NewTimer(sendDuration)
 				ticker := time.NewTicker(nonceTicker)
@@ -117,12 +124,13 @@ func sendTestTx(privKey, flag string) {
 						//time.Sleep(5*time.Millisecond)
 						fmt.Println(flag+"nonce is what", ":", nonce, "from:", from.String())
 						rand.Seed(time.Now().Unix())
-						//n1 := rand.Int31n(9)
-						//n2 := rand.Int31n(9)
-						//to := common.HexToAddress(fmt.Sprintf("0x08b299d855734914cd7b19eea60dc84b%d25680f%d", n1, n2))
-						to := common.HexToAddress("0x98f22b4c3d3e2d567b10ef2c1331d15c60785c9b")
+						n1 := rand.Int31n(9)
+						n2 := rand.Int31n(9)
+						to := common.HexToAddress(fmt.Sprintf("0x08b299d855734914cd7b19eea60dc84b%d25680f%d", n1, n2))
+						//to := common.HexToAddress("0xc1ae7d4e6dbec680430313033e9cb971ad104ce6")
 						fmt.Printf("to:%s\n", to.String())
-						tx := types.NewTransaction(nonce, to, amount, gasLimit, gasPrice, nil)
+						data:=[]byte(string(i))
+						tx := types.NewTransaction(nonce, to, amount, gasLimit, gasPrice, data)
 						//signer := types.HomesteadSigner{}
 						//signer:=types.NewEIP155Signer(big.NewInt(1))
 						signer := types.NewEIP155Signer(big.NewInt(739))
@@ -133,7 +141,7 @@ func sendTestTx(privKey, flag string) {
 							return
 						} else {
 							fmt.Printf(flag+"Transaction hash: %s, %d, %s\n", txhash.String(), nonce, from.String())
-							nonce++
+							//nonce++
 							i++
 
 							if txNum != -1 && i >= txNum {

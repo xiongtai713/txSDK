@@ -1,0 +1,12 @@
+
+\.idea/
+
+*.a
+
+build/_deps/
+build/bin/
+pdxcc/\.baap\.db
+cmd/netmux/netmux
+build/prv/go.sum
+go.mod
+go.sum
