@@ -72,7 +72,7 @@ func sendTestTx(privKey, flag string) {
 	//if client, err := eth.Connect("http://utopia-chain-1001:8545", proxy, token); err != nil {
 	if client, err := eth.Connect(host); err != nil {
 	//if client, err := eth.Connect("http://10.0.0.219:33333"); err != nil {
-
+//dddd
 		fmt.Printf(err.Error())
 		return
 	} else {
