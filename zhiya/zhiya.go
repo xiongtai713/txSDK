@@ -45,10 +45,26 @@ var add1 = []string{
 	//"0xFa438a905CD413fCed5079Fd0c7585AaC687Dd4B",
 	//"0xC29e28e3F3F58D94F2ba67E045Ab0a433F15151f",
 
-	"0xFa438a905CD413fCed5079Fd0c7585AaC687Dd4B",
-	"0xC29e28e3F3F58D94F2ba67E045Ab0a433F15151f",
-}
+	//"0xFa438a905CD413fCed5079Fd0c7585AaC687Dd4B",
+	//"0xC29e28e3F3F58D94F2ba67E045Ab0a433F15151f",
 
+	//"10dd53cf0c5e1b9655dba271d12b03d91f25732e",
+	//"5b6568e75d5bdd4720346189045c2413a97b7e2c",
+	//"f6552706cc570959c7d02a2473f1721a28ffbaee",
+	//"dadfc6f3ef83e84f0f410f4a028f674fdc7e2a84",
+
+
+	//"0xe59dc7aec830883aea7a410f922644b7bfe3722b",
+	"0x2ab41eab7251cfed27fb8dcc82422c118bc27ecf",
+	"0x9ac6911b4a060f22dddd92846cbcd8111658c81f",
+	"0xb9e21add8495c75e6eaab9c41ff28b70e92a3daf",
+	"0x8e040f58551a2e9a7e4df6a81bbe4a954d671cd3",
+	"0xc59c6c9ee3c2e1bab90caf2a7917436c5a095a2c",
+	"0xc9785932f19d36aa7fb6b61afb8dc5365f578657",
+	"0x91cb690a49164b064206d8785d5624e09800c9eb",
+	"0xdd8c5c4826a59045aa4ffebe4db85c94e3572986",
+	"0x5cebe47f36a6df45128bc595646e27c5f439f83d",
+}
 
 func main() {
 
@@ -57,14 +73,14 @@ func main() {
 	//client, err := eth.Connect("http://utopia-chain-739:8545", proxy, token)
 	//client, err := eth.Connect("http://47.92.156.106:30233")
 	//client, err := eth.Connect("http://39.100.210.156:30193")
-	//client, err := eth.Connect("http://127.0.0.1:8547")
-	client, err := eth.Connect("http://47.94.209.251:30111")
-	//client, err := eth.Connect("http://10.0.0.34:33333")
+	client, err := eth.Connect("http://127.0.0.1:8547")
+	//client, err := eth.Connect("http://47.94.209.251:30111")
+	//client, err := eth.Connect("http://47.108.74.227:30168")
 
-	//if err != nil {
-	//	fmt.Printf("1", err.Error())
-	//	return
-	//}
+	if err != nil {
+		fmt.Printf("1", err.Error())
+		return
+	}
 
 	gasLimit := uint64(4712388)
 	gasPrice := new(big.Int).Mul(big.NewInt(1e9), big.NewInt(4000)) //todo 此处很重要，不可以太低，可能会报underprice错误，增大该值就没有问题了
@@ -72,14 +88,14 @@ func main() {
 	privKey, err := crypto.HexToECDSA("a9f1481564399443bb39188d3f8da55585c9238ab175010b81e7a28956559381") //0x7de2a31d6ca36302ea7b7917c4fc5ef4c12913b6
 	//privKey, err := crypto.HexToECDSA("141ebc1d272e88789c2b1eedee3ecb243c95ff6ae0fc8c41658270636cf930c8")
 
-	//privKey, err := crypto.HexToECDSA("d29ce71545474451d8292838d4a0680a8444e6e4c14da018b4a08345fb2bbb84")
+	//privKey, err := crypto.HexToECDSA("d29ce71545474451d8292838d4a0680a8444e6e4c14da018b4a08345fb2bbb84") //0x86082fa9d3c14d00a8627af13cfa893e80b39101
 	if err != nil {
 		fmt.Printf(err.Error())
 		return
 	}
 	from := crypto.PubkeyToAddress(privKey.PublicKey)
 	fmt.Printf("from:%s\n", from.String())
-	ctx, _ := context.WithTimeout(context.TODO(), 2*time.Second)
+	ctx, _ := context.WithTimeout(context.TODO(), 10*time.Second)
 	nonce, err := client.EthClient.PendingNonceAt(ctx, from)
 	if err != nil {
 		fmt.Println("nonce err", err)
@@ -87,7 +103,6 @@ func main() {
 	}
 	for i := 0; i < len(add1); i++ {
 
-		//addr := common.HexToAddress("0x7De2a31d6CA36302eA7b7917C4FC5eF4c12913b6")
 		addr := common.HexToAddress(add1[i])
 		recaption := &HypothecationAddress{
 			addr,
@@ -105,12 +120,12 @@ func main() {
 		fmt.Println(from.String())
 
 		//退钱
-
+		//
 		//amount := big.NewInt(0)
 		//to := common.BytesToAddress(crypto.Keccak256([]byte("redamption"))[12:])
 		//fmt.Printf("to:%s\n", to.String())
 		//
-		//////退钱需要填充的
+		////////退钱需要填充的
 		//type RecaptionInfo struct {
 		//	HypothecationAddr common.Address `json:"hypothecation_addr"` //质押的地址
 		//
@@ -128,7 +143,7 @@ func main() {
 		//	fmt.Printf("marshal XChainTransferWithdraw err:%s", err)
 		//	return
 		//}
-
+		//////////////////////////////////////////////
 		msg := ethereum.CallMsg{
 			From:  from,
 			Data:  payload1, //code =wasm code1 =sol
@@ -137,21 +152,23 @@ func main() {
 		}
 		gas, err := client.EthClient.EstimateGas(context.TODO(), msg)
 		if err != nil {
-			fmt.Println("错误拉", err)
+			fmt.Println("错误拉1", err)
 		}
 		price, err := client.EthClient.SuggestGasPrice(context.TODO())
 		if err != nil {
-			fmt.Println("错误拉", err)
+			fmt.Println("错误拉2", err)
 		}
 		fmt.Println("预估gas是", gas, "price", price)
 
 		gasLimit = gas
 		tx := types.NewTransaction(uint64(nonce), to, amount, gasLimit, gasPrice, payload1)
-		fmt.Println("input",common.ToHex(payload1))
+		fmt.Println("input", common.ToHex(payload1))
 		//EIP155 signer
 		signer := types.NewEIP155Signer(big.NewInt(739))
 		//signer := types.HomesteadSigner{}
 		signedTx, _ := types.SignTx(tx, signer, privKey)
+
+		signedTx.ChainId()
 		// client.EthClient.SendTransaction(context.TODO(), signedTx)
 		if txHash, err := client.SendRawTransaction(context.TODO(), signedTx); err != nil {
 			fmt.Println("yerror", err.Error())

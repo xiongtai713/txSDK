@@ -8,10 +8,13 @@ import (
 )
 
 func main() {
-	key, err := keystore.DecryptKey([]byte(`{"address":"0d6361220d06798d18bb7fd252ec1059979b81cb","crypto":{"cipher":"aes-128-ctr","ciphertext":"0d6468d1bca37b75c227c30a19171301cd332c7c44968ef9c6fb7cceaf3fd067","cipherparams":{"iv":"ebb74ea239f8aaa86fd178c0a7d1ea6b"},"kdf":"scrypt","kdfparams":{"dklen":32,"n":262144,"p":1,"r":8,"salt":"dd24740f470bbe4b0a915d3526a46894241df3cc5313553722f048b49158f525"},"mac":"7b31bb5b84092b47eca492fbdad00dd9929a2a17d01d0deda0922f3ce8766398"},"id":"15e03bfb-fc8e-4585-8467-3ea647eec7bc","version":3}`), "123")
+	key, err := keystore.DecryptKey([]byte(`{"address":"e8aec858dc98adb748a6c0f57e314174081d0fc0","crypto":{"cipher":"aes-128-ctr","ciphertext":"5c746e0e4acb60033d106783346abbf54425d285d27c6deaa2c655b25c29095d","cipherparams":{"iv":"f8323b02bb287b353df8c5b2cb95fa97"},"kdf":"scrypt","kdfparams":{"dklen":32,"c": null,"n":262144,"p":1,"r":8,"salt":"90623d80bf32205b562f16f13560ac063083b2f65301069c75684f0f69277490"},"mac":"ed57d81e3f2d1772fefb927fc2b879a6d4fe4eff573f3fa8e2a613706b4ffa60"},"id":"bd0d2579-4aaf-406b-831d-4328e07994dc","version":3}`), "123456789")
 	if err != nil {
 		log.Fatal("错误了", err)
 	}
-	privKey := fmt.Sprintf("%x", crypto.FromECDSA(key.PrivateKey))
+
+	privKey := fmt.Sprintf("%x", crypto.FromECDSAPub(&key.PrivateKey.PublicKey))
+
+	//privKey := fmt.Sprintf("%x", crypto.FromECDSA(key.PrivateKey))
 	fmt.Println(privKey)
 }

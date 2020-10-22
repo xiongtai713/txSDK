@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/ecdsa"
 	"crypto/rand"
 	"encoding/hex"
 	"fmt"
@@ -19,7 +20,7 @@ func main() {
 
 		fmt.Println(hex.EncodeToString(crypto.FromECDSA(prv.ExportECDSA())))
 
-
+		ecdsa.GenerateKey()
 	}
 
 	//ecdsa私钥转地址

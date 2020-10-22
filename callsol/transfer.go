@@ -3,37 +3,34 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/crypto"
 	"log"
 	"math/big"
+	"pdx-chain/common"
+	"pdx-chain/core/types"
+	"pdx-chain/crypto"
+	client2 "pdx-chain/utopia/utils/client"
 	"strconv"
 	"sync"
 	"time"
 )
 
-//private:5ca4829b9ad9ba68e74a747115e33ef3998f0f786f924e6f3b6ec2e56504ed15
-//public:03da13b473060d0e7c5217923cc395eac4c500bdc7b33731680ec97c503c5b181d
-//address:251b3740a02a1c5cf5ffcdf60d42ed2a8398ddc8
-
 const (
 	//host         = "http://39.100.34.235:30074"
 	//host         = "http://39.100.93.177:30036"
 	//host = "http://10.0.0.203:33333"
-	host = "http://10.0.0.4:33333"
-	//host         = "http://10.0.0.110:8545"
+	//host = "http://10.0.0.4:33333"
+	host         = "http://127.0.0.1:8547"
 	sendDuration  = time.Minute * 60000000
 	nonceTicker   = time.Minute * 10  //多久重新查一次nonce （note:此处应该大于1处， 否则ticker会不断执行）
-	sleepDuration = time.Minute * 1000 //查完nonce后休眠时间（1处）
-	txNum         = 1
+	sleepDuration = time.Minute * 1 //查完nonce后休眠时间（1处）
+	txNum         = 1000000
 )
 
 var privKeys = []string{
 	//"a9f1481564399443bb39188d3f8da55585c9238ab175010b81e7a28956559381",  //7DE
 	// "d29ce71545474451d8292838d4a0680a8444e6e4c14da018b4a08345fb2bbb84",
 	//"009f1dfe52be1015970d9087de0ad2a98f4c68f610711d1533aa21a71ccc8f4a", //from:0x00CFc66BBD69fb964df1C9782062D4282FfF0cda
-//"69192206e447dbc8b6627d7beb540e6c606c5b94afa9ebc00734ff404a1e5617",
+	//"69192206e447dbc8b6627d7beb540e6c606c5b94afa9ebc00734ff404a1e5617",
 
 	"d29ce71545474451d8292838d4a0680a8444e6e4c14da018b4a08345fb2bbb84", //086
 
@@ -68,9 +65,9 @@ func sendTestTx(privKey, flag string) {
 	//proxy := "http://10.0.0.241:9999"
 	//token := "eyJhbGciOiJFUzI1NiJ9.eyJpYXQiOjE1ODk5NzQ2NzIsIkZSRUUiOiJUUlVFIn0.sWYZ6awd8yRNX9iG5o7Ls4Uop5nfZrUtuprx9hwKxw2fS5zQtxunY11bccJ_h29VfnFMqyvaVvI9Tu3R0USlwQ"
 	//if client, err := eth.Connect("http://utopia-chain-1001:8545", proxy, token); err != nil {
-	if client, err := Connect1(host); err != nil {
-	//if client, err := eth.Connect("http://10.0.0.219:33333"); err != nil {
-//dddd
+	if client, err := client2.Connect(host); err != nil {
+		//if client, err := eth.Connect("http://10.0.0.219:33333"); err != nil {
+		//dddd
 		fmt.Printf(err.Error())
 		return
 	} else {
@@ -131,7 +128,7 @@ func sendTestTx(privKey, flag string) {
 						tx := types.NewTransaction(nonce, to, amount, gasLimit, gasPrice, data)
 						//signer := types.HomesteadSigner{}
 						//signer:=types.NewEIP155Signer(big.NewInt(1))
-						signer := types.NewEIP155Signer(big.NewInt(222))
+						signer := types.NewEIP155Signer(big.NewInt(777))
 						signedTx, _ := types.SignTx(tx, signer, privKey)
 						if txhash, err := client.SendRawTransaction(context.TODO(), signedTx); err != nil {
 							fmt.Println(flag+"send raw transaction err:", err.Error())
