@@ -57,6 +57,7 @@ func main() {
 			new(big.Int).Mul(big.NewInt(1e9), big.NewInt(18)),
 			code),
 		types.NewEIP155Signer(big.NewInt(777)),
+		//types.NewSm2Signer(big.NewInt(777)),
 		pri,
 	)
 	if err != nil {
@@ -66,6 +67,7 @@ func main() {
 	hashes, err := client.SendRawTransaction(context.Background(), tx)
 	if err != nil {
 		fmt.Println("tx err", err)
+		return
 	}
 	fmt.Println("txHash", hashes.Hex())
 

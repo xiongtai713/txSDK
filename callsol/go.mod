@@ -10,7 +10,7 @@ replace github.com/cc14514/go-alibp2p-ca => /Users/liu/code/pdx-chain/build/_dep
 
 replace github.com/cc14514/go-certool => /Users/liu/code/pdx-chain/build/_deps/go-certool
 
-replace github.com/tjfoc/gmsm => github.com/PDXbaap/gmsm v1.3.11
+replace github.com/tjfoc/gmsm => /Users/liu/go/src/go-eth/callsol/gmsm
 
 require (
 	github.com/ethereum/go-ethereum v1.9.20

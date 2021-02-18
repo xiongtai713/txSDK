@@ -17,7 +17,7 @@ import (
 	"strings"
 )
 
-var To = common2.HexToAddress("0xbFEdB41331CE841123ac1F2ae091ECBaAd6c7235")
+var To = common2.HexToAddress("0xDa3Ce11D916fFBa4a1289cEf66A7f142eC5A0f74")
 var tset = "sss"
 
 
@@ -105,12 +105,15 @@ func main() {
 	gasLimit := uint64(4712388)
 	gasPrice := new(big.Int)
 	gasPrice.Mul(big.NewInt(4000), big.NewInt(1e9)) //todo 此处很重要，不可以太低，可能会报underprice错误，增大该值就没有问题了
-	for {
+	x:=50000
+	//nonce=10
+
+	for i:=0;i<x;i++ {
 		tx := types2.NewTransaction(uint64(nonce), To, amount, gasLimit, gasPrice, abiBuf)
-		//EIP155 signer
 		signer := types2.NewEIP155Signer(big.NewInt(777))
-		//signer := types.HomesteadSigner{}
 		signedTx, _ := types2.SignTx(tx, signer, pri)
+		//EIP155 signer
+		//signer := types.HomesteadSigner{}
 		// client.EthClient.SendTransaction(context.TODO(), signedTx)
 
 			if txHash, err := client.SendRawTransaction(context.TODO(), signedTx); err != nil {
@@ -118,7 +121,7 @@ func main() {
 
 			} else {
 
-				fmt.Println("result:", txHash.String())
+				fmt.Println("result:", txHash.String(),"数量",i)
 			}
 
 

@@ -4,17 +4,21 @@ import (
 	"context"
 	"encoding/hex"
 	"fmt"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/crypto/sha3"
 	"github.com/golang/protobuf/proto"
-	"go-eth/eth"
-	"go-eth/eth/protos"
+	"math/big"
+	"pdx-chain/pdxcc"
+	"pdx-chain/pdxcc/protos"
+	client2 "pdx-chain/utopia/utils/client"
+
+	"pdx-chain/common"
+	"pdx-chain/crypto/sha3"
+
 	"time"
 )
 
 func main() {
 	//if client, err := eth.Connect("http://192.168.0.120:8546"); err != nil {
-	if client, err := eth.Connect("http://39.100.84.247:8545"); err != nil {
+	if client, err := client2.Connect("http://39.100.84.247:8545"); err != nil {
 		//if client, err := eth.Connect("http://39.100.84.247:8545"); err != nil {
 		fmt.Printf(err.Error())
 		return
@@ -43,11 +47,13 @@ func main() {
 
 		c, _ := context.WithTimeout(context.Background(), 800*time.Millisecond)
 		start := time.Now()
-		result, err := client.BaapQuery(c, data)
-		if err != nil {
-			fmt.Println("query tx error", "err", err)
-			return
-		}
+		var result []byte
+		client.rpcClient.CallContext(c, &result, "eth_baapQuery", common.ToHex(data))
+		//result, err := client.BaapQuery(c, data)
+		//if err != nil {
+		//	fmt.Println("query tx error", "err", err)
+		//	return
+		//}
 		fmt.Printf("ellips:%s\n", time.Now().Sub(start).String())
 
 		fmt.Println("baap query", "resp", result)
