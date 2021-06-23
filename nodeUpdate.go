@@ -7,7 +7,7 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/crypto"
-	"go-eth/eth"
+	"go-eth/callsol"
 	"math/big"
 )
 
@@ -27,7 +27,7 @@ type ConsensusNodeUpdate struct {
 
 func main() {
 
-	client, _ := eth.Connect("http://127.0.0.1:8547")
+	client, _ := eth1.ToolConnect("http://127.0.0.1:8547")
 
 	key, _ := crypto.HexToECDSA(prikey)
 

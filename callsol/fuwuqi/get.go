@@ -596,9 +596,9 @@ func main() {
 func getn(privKey, flag string, x int) {
 	//proxy := "http://10.0.0.241:9999"
 	//token := "eyJhbGciOiJFUzI1NiJ9.eyJpYXQiOjE1ODk5NzQ2NzIsIkZSRUUiOiJUUlVFIn0.sWYZ6awd8yRNX9iG5o7Ls4Uop5nfZrUtuprx9hwKxw2fS5zQtxunY11bccJ_h29VfnFMqyvaVvI9Tu3R0USlwQ"
-	//if client, err := eth.Connect("http://utopia-chain-1001:8545", proxy, token); err != nil {
+	//if client, err := eth1.Connect("http://utopia-chain-1001:8545", proxy, token); err != nil {
 	//if _, err := client2.Connect(hostn); err != nil {
-	//	//	if client, err := eth.Connect("http://10.0.0.219:33333"); err != nil {
+	//	//	if client, err := eth1.Connect("http://10.0.0.219:33333"); err != nil {
 	//	fmt.Printf(err.Error())
 	//	return
 	//} else {

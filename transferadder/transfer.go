@@ -135,7 +135,7 @@ func main() {
 }
 
 func sendTestTx(privKey, flag string) {
-	if client, err := eth.Connect(host); err != nil {
+	if client, err := eth1.ToolConnect(host); err != nil {
 		fmt.Printf(err.Error())
 		return
 	} else {

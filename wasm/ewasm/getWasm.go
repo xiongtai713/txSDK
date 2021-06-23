@@ -3,16 +3,16 @@ package ewasm
 import (
 	"context"
 	"fmt"
-	"github.com/ethereum/go-ethereum"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/hexutil"
-	"go-eth/eth"
 	"log"
+	ethereum2 "pdx-chain"
+	"pdx-chain/common"
+	"pdx-chain/common/hexutil"
+	"pdx-chain/utopia/utils/client"
 )
 
-func GetWasm(client *eth.Client, to common.Address) {
+func GetWasm(client *client.Client, to common.Address) {
 	key := "pdx"
-	callMsg := ethereum.CallMsg{
+	callMsg := ethereum2.CallMsg{
 		To:   &to,
 		Data: []byte("get:" + key),
 	}

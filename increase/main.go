@@ -4,17 +4,17 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/crypto"
-	"go-eth/eth"
 	"math/big"
+	"pdx-chain/common"
+	"pdx-chain/core/types"
+	"pdx-chain/crypto"
+	client2 "pdx-chain/utopia/utils/client"
 )
 
 func main() {
 
-	//client, err := eth.Connect("http://127.0.0.1:8547")
-	client, err := eth.Connect("http://127.0.0.1:8552")
+	//client, err := eth1.Connect("http://127.0.0.1:8547")
+	client, err := client2.Connect("http://127.0.0.1:8547")
 
 
 	gasLimit := uint64(4712388)
@@ -41,7 +41,7 @@ func main() {
 	to := common.BytesToAddress(crypto.Keccak256([]byte("inCrease"))[12:])
 	tx := types.NewTransaction(nonce, to, big.NewInt(0), gasLimit, gasPrice, payload1)
 	//EIP155 signer
-	signer := types.NewEIP155Signer(big.NewInt(739))
+	signer := types.NewEIP155Signer(big.NewInt(111))
 	//signer := types.HomesteadSigner{}
 	signedTx, _ := types.SignTx(tx, signer, privKey)
 	if txHash, err := client.SendRawTransaction(context.TODO(), signedTx); err != nil {

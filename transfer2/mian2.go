@@ -6,7 +6,7 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/crypto"
-	"go-eth/eth"
+	"go-eth/callsol"
 	"log"
 	"math/big"
 	"math/rand"
@@ -9679,9 +9679,9 @@ func main() {
 func sendTestTx1(privKey, flag string) {
 	//proxy := "http://39.100.92.188:9999"
 	//token := "eyJhbGciOiJFUzI1NiJ9.eyJpYXQiOjE1NzQ2NzM3ODIsIkZSRUUiOiJUUlVFIn0.DARdyLtPRhT9eNPpoOi4KIno3ZC-UTQ2D48yiBdOXkYBjaKjdiggJUVzoVNvTEnRqzaeBP8WizIp_ZMo_Eh_JA"
-	//if client, err := eth.Connect("http://utopia-chain-739:8545", proxy, token); err != nil {
-	if client, err := eth.Connect("http://127.0.0.1:8547"); err != nil {
-		//if client, err := eth.Connect("http://47.92.137.120:30402"); err != nil {
+	//if client, err := eth1.ToolConnect("http://utopia-chain-739:8545", proxy, token); err != nil {
+	if client, err := eth1.ToolConnect("http://127.0.0.1:8547"); err != nil {
+		//if client, err := eth1.ToolConnect("http://47.92.137.120:30402"); err != nil {
 
 		fmt.Printf(err.Error())
 		return

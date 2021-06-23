@@ -8,7 +8,7 @@ import (
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/rlp"
-	"go-eth/eth"
+	"go-eth/callsol"
 	"log"
 	"math/big"
 	"math/rand"
@@ -114,13 +114,13 @@ func main() {
 }
 
 func sendCCTx2(contract, privKey string, inputs []string, flag string) {
-	//if client, err := eth.Connect("http://10.1.0.101:8546"); err != nil {
+	//if client, err := eth1.ToolConnect("http://10.1.0.101:8546"); err != nil {
 	proxy := "http://39.100.92.188:9999"
 	token := "eyJhbGciOiJFUzI1NiJ9.eyJpYXQiOjE1NzMyMDQzMzMsIkZSRUUiOiJUUlVFIn0.Tn4Nf7aMtYPDTtwWpAXMLkQZuRnnEmxZHbbi63WXkbnPNR7yTISxgs84AEGuwV_aXI8UgFpX8QomEuDrmSHtKQ"
-	client, _ := eth.Connect("http://utopia-chain-739:8545", proxy, token)
-	//if client, err := eth.Connect(node); err != nil {
-	//if client, err := eth.Connect("http://10.0.0.124:8546"); err != nil {
-	//if client, err := eth.Connect("http://192.168.0.136:8545"); err != nil {
+	client, _ := eth1.ToolConnect("http://utopia-chain-739:8545", proxy, token)
+	//if client, err := eth1.ToolConnect(node); err != nil {
+	//if client, err := eth1.ToolConnect("http://10.0.0.124:8546"); err != nil {
+	//if client, err := eth1.ToolConnect("http://192.168.0.136:8545"); err != nil {
 	//fmt.Errorf("Connect出错%s\n", flag+err.Error())
 	//return
 	if privKey, err := crypto.HexToECDSA(privKey); err != nil {

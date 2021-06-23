@@ -8,8 +8,8 @@ import  (
 "github.com/ethereum/go-ethereum/crypto"
 "github.com/ethereum/go-ethereum/crypto/sha3"
 "github.com/golang/protobuf/proto"
-"go-eth/eth"
-"go-eth/eth/protos"
+	"go-eth/callsol"
+	"go-eth/callsol/protos"
 "log"
 "math/big"
 "math/rand"
@@ -113,10 +113,10 @@ wg.Wait()
 }
 
 func sendChainCodeTx(contract, privKey, flag string) {
-//if client, err := eth.Connect("http://10.0.0.124:8546"); err != nil {
-//if client, err := eth.Connect("http://10.0.0.124:8546"); err != nil {
-if client, err := eth.Connect(mynode); err != nil {
-//if client, err := eth.Connect("http://10.1.0.104:8545"); err != nil {
+//if client, err := eth1.ToolConnect("http://10.0.0.124:8546"); err != nil {
+//if client, err := eth1.ToolConnect("http://10.0.0.124:8546"); err != nil {
+if client, err := eth1.ToolConnect(mynode); err != nil {
+//if client, err := eth1.ToolConnect("http://10.1.0.104:8545"); err != nil {
 fmt.Printf(flag + err.Error())
 return
 } else {
@@ -191,10 +191,10 @@ nonce++
 }
 
 func sendSolidityTx(contract, privKey string, flag string) {
-//if client, err := eth.Connect("http://10.1.0.101:8546"); err != nil {
-if client, err := eth.Connect(mynode); err != nil {
-//if client, err := eth.Connect("http://10.0.0.124:8546"); err != nil {
-//if client, err := eth.Connect("http://192.168.0.136:8545"); err != nil {
+//if client, err := eth1.ToolConnect("http://10.1.0.101:8546"); err != nil {
+if client, err := eth1.ToolConnect(mynode); err != nil {
+//if client, err := eth1.ToolConnect("http://10.0.0.124:8546"); err != nil {
+//if client, err := eth1.ToolConnect("http://192.168.0.136:8545"); err != nil {
 fmt.Printf(flag + err.Error())
 return
 } else {

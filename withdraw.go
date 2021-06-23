@@ -9,7 +9,7 @@ import (
 "github.com/ethereum/go-ethereum/crypto"
 "github.com/ethereum/go-ethereum/crypto/sha3"
 "github.com/ethereum/go-ethereum/p2p/discover"
-"go-eth/eth"
+	"go-eth/callsol"
 "math/big"
 )
 
@@ -18,7 +18,7 @@ import (
 //address:251b3740a02a1c5cf5ffcdf60d42ed2a8398ddc8
 
 func main() {
-if client, err := eth.Connect("http://127.0.0.1:8546"); err != nil {
+if client, err := eth1.ToolConnect("http://127.0.0.1:8546"); err != nil {
 fmt.Printf(err.Error())
 return
 } else {

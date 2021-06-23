@@ -41,7 +41,7 @@ func main() {
 
 	client, err := Connect("http://" + ip + ":" + port)
 	fmt.Println("要发送的地址" + "http://" + ip + ":" + port)
-	//client, err := eth.Connect("http://10.0.0.116:33333")
+	//client, err := eth1.Connect("http://10.0.0.116:33333")
 
 	if err != nil {
 		log.Fatal("ethclient Dial fail", err)

@@ -3,13 +3,16 @@ package main
 import (
 	"context"
 	"crypto/ecdsa"
+	"crypto/elliptic"
+	"encoding/hex"
 	"fmt"
-	"github.com/tjfoc/gmsm/sm2"
 	"log"
 	"math/big"
 	"pdx-chain/common"
 	"pdx-chain/core/types"
 	"pdx-chain/crypto"
+	"pdx-chain/crypto/gmsm/sm2"
+	"pdx-chain/rlp"
 	client2 "pdx-chain/utopia/utils/client"
 	"strconv"
 	"sync"
@@ -20,12 +23,12 @@ const (
 	//host         = "http://39.100.34.235:30074"
 	//host         = "http://39.100.93.177:30036"
 	//host = "http://10.0.0.203:33333"
-	//host3 = "http://10.0.0.211:22222"
-	host1sm2          = "http://127.0.0.1:8547"
-	sendDuration1  = time.Minute * 1
-	nonceTicker1   = time.Minute * 10 //多久重新查一次nonce （note:此处应该大于1处， 否则ticker会不断执行）
+	host1sm2 = "http://10.0.0.113:22222"
+	//host1sm2          = "http://127.0.0.1:8547"
+	sendDuration1  = time.Minute * 1000
+	nonceTicker1   = time.Minute * 100 //多久重新查一次nonce （note:此处应该大于1处， 否则ticker会不断执行）
 	sleepDuration1 = time.Minute * 1  //查完nonce后休眠时间（1处）
-	txNum1         = -1
+	txNum1         = 1
 )
 
 var privKeys1 = []string{
@@ -38,7 +41,7 @@ var privKeys1 = []string{
 		"72660cbaef2ca607751c0514922ca995a566f5bd508ccfae4896265db856d115", //sm2
 		//"65035d9621f7be3bb6dc1f5a646e6ee2ef6bddf3f1ce57782d409c23857401a6", //sm2 不能过
 		//"9f8bc5114579e4db3765771a70869678caa13a9ec3571a3cf2a6140d375b7417", //sm2 能过
-		//"71fa69bf38e20b32fbf980645eee0496dd13c85dceb4b3e2c66514ceed27f40e",
+		//"f0eb5cfc43b8f37e4476e28bda874365e092ec940660f7781d1825a5ae82fa52",
 }
 
 func main() {
@@ -68,9 +71,9 @@ func main() {
 func sendTestTx1(privKey, flag string) {
 	//proxy := "http://10.0.0.241:9999"
 	//token := "eyJhbGciOiJFUzI1NiJ9.eyJpYXQiOjE1ODk5NzQ2NzIsIkZSRUUiOiJUUlVFIn0.sWYZ6awd8yRNX9iG5o7Ls4Uop5nfZrUtuprx9hwKxw2fS5zQtxunY11bccJ_h29VfnFMqyvaVvI9Tu3R0USlwQ"
-	//if client, err := eth.Connect("http://utopia-chain-1001:8545", proxy, token); err != nil {
+	//if client, err := eth1.Connect("http://utopia-chain-1001:8545", proxy, token); err != nil {
 	if client, err := client2.Connect(host1sm2); err != nil {
-		//	if client, err := eth.Connect("http://10.0.0.219:33333"); err != nil {
+		//	if client, err := eth1.Connect("http://10.0.0.219:33333"); err != nil {
 		fmt.Printf(err.Error())
 		return
 	} else {
@@ -87,6 +90,13 @@ func sendTestTx1(privKey, flag string) {
 			return
 		}
 		sKey := sm2.InitKey(sbin)
+		var curve elliptic.Curve
+		curve=sm2.P256Sm2()
+		marshal := elliptic.Marshal(curve, sKey.PublicKey.X, sKey.PublicKey.Y)
+		fmt.Println("私钥",privKey)
+		fmt.Println("公钥",fmt.Sprintf("%x",marshal))
+		fmt.Println("sm2compressed pukey:", hex.EncodeToString(sm2.Compress((*sm2.PublicKey)(&sKey.PublicKey))))
+
 
 		//pKey1, _ := crypto.HexToECDSA(privKey)
 		//pbin, _ := new(big.Int).SetString(privKey, 16)
@@ -97,8 +107,7 @@ func sendTestTx1(privKey, flag string) {
 		//privK: d6bf45db5f7e1209cdf58c0cca2f28516bdf4ce07cad211cf748f31874084b5e
 		//compress := sm2.Compress((*sm2.PublicKey)(&sKey.PublicKey))
 
-		pub := crypto.FromECDSAPub(&sKey.PublicKey)
-		fmt.Println("公钥",fmt.Sprintf("%x",pub))
+
 		if nonce, err := client.EthClient.NonceAt(context.TODO(), from, nil); err != nil {
 			fmt.Printf("nonce err: %s", err.Error())
 			//return
@@ -115,7 +124,7 @@ func sendTestTx1(privKey, flag string) {
 			ticker := time.NewTicker(nonceTicker1)
 			log.Println(flag+"start:", time.Now().String())
 			i := 0
-			//nonce = 100
+			//nonce = 10
 			for {
 				select {
 				case <-timer.C:
@@ -154,20 +163,21 @@ func sendTestTx1(privKey, flag string) {
 					//compress := sm2.Compress((*sm2.PublicKey)(&sKey.PublicKey))
 					//fmt.Println("公钥",hex.EncodeToString(compress))
 					//signedTx, err := SignTx(tx, signer, pKey)
-					//data, err := rlp.EncodeToBytes(signedTx)
-					//fmt.Println(common.ToHex(data))
+					data, err := rlp.EncodeToBytes(signedTx)
+					fmt.Println(common.ToHex(data))
 
 					//sm2.Sm2Verify(sKey.PublicKey,signer.Hash(tx).Bytes(),signer.ChainId.Bytes(),signedTx.Data())
 					if err != nil {
 						fmt.Println("types.SignTx", err)
 						return
 					}
-					if _, err := client.SendRawTransaction(context.TODO(), signedTx); err != nil {
+					if txhash, err := client.SendRawTransaction(context.TODO(), signedTx); err != nil {
 						fmt.Println(flag+"send raw transaction err:", err.Error())
-						nonce, _ = client.EthClient.NonceAt(context.TODO(), from, nil)
+						//nonce, _ = client.EthClient.NonceAt(context.TODO(), from, nil)
+						fmt.Println(rlp.EncodeToBytes(tx))
 						return
 					} else {
-						//fmt.Printf(flag+"Transaction hash: %s, %d, %s\n", txhash.String(), nonce, from.String())
+						fmt.Printf(flag+"Transaction hash: %s, %d, %s\n", txhash.String(), nonce, from.String())
 						nonce++
 						i++
 

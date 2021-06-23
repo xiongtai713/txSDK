@@ -3,7 +3,7 @@ package main
 import (
 "context"
 "fmt"
-"go-eth/eth"
+    "go-eth/callsol"
 "math/big"
 // "time"
 
@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-client, err := eth.Connect("http://localhost:8545")
+client, err := eth1.ToolConnect("http://localhost:8545")
 
 if err != nil {
 fmt.Errorf(err.Error())
@@ -33,7 +33,7 @@ amount := big.NewInt(1)
 gasLimit := big.NewInt(90000)
 gasPrice := big.NewInt(0)
 data := []byte{}
-message := eth.NewMessage(&from, &to, amount, gasLimit, gasPrice, data)
+message := eth1.NewMessage(&from, &to, amount, gasLimit, gasPrice, data)
 
 if txHash, err := client.SendTransaction(context.TODO(), &message); err != nil {
 fmt.Errorf(err.Error())

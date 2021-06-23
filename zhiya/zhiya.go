@@ -9,7 +9,7 @@ import (
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/p2p/discover"
 	"github.com/ethereum/go-ethereum/rlp"
-	"go-eth/eth"
+	"go-eth/callsol"
 	"math/big"
 	"time"
 )
@@ -70,12 +70,12 @@ func main() {
 
 	//proxy := "http://10.0.0.180:9999"
 	//token := "eyJhbGciOiJFUzI1NiJ9.eyJpYXQiOjE1ODUzMDM5MTcsIkZSRUUiOiJUUlVFIn0.wqT3bmVf2Zo5gbhq-wg3-pANSloYIarEUijHfbmJKkBStDWoft_bFZrviwZNux4C-WApGuCfqAHEarVxfuebUw"
-	//client, err := eth.Connect("http://utopia-chain-739:8545", proxy, token)
-	//client, err := eth.Connect("http://47.92.156.106:30233")
-	//client, err := eth.Connect("http://39.100.210.156:30193")
-	client, err := eth.Connect("http://127.0.0.1:8547")
-	//client, err := eth.Connect("http://47.94.209.251:30111")
-	//client, err := eth.Connect("http://47.108.74.227:30168")
+	//client, err := eth1.ToolConnect("http://utopia-chain-739:8545", proxy, token)
+	//client, err := eth1.ToolConnect("http://47.92.156.106:30233")
+	//client, err := eth1.ToolConnect("http://39.100.210.156:30193")
+	client, err := eth1.ToolConnect("http://127.0.0.1:8547")
+	//client, err := eth1.ToolConnect("http://47.94.209.251:30111")
+	//client, err := eth1.ToolConnect("http://47.108.74.227:30168")
 
 	if err != nil {
 		fmt.Printf("1", err.Error())

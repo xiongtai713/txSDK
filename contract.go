@@ -5,7 +5,7 @@ import (
 "crypto/ecdsa"
 "fmt"
 Contract "go-eth/contract"
-"go-eth/eth"
+	"go-eth/callsol"
 "math/big"
 "os"
 
@@ -43,7 +43,7 @@ return txOpts
 }
 
 func main() {
-if client, err := eth.Connect("ws://localhost:8546"); err != nil {
+if client, err := eth1.ToolConnect("ws://localhost:8546"); err != nil {
 fmt.Errorf(err.Error())
 return
 } else {

@@ -5,11 +5,11 @@ import (
 "fmt"
 "github.com/ethereum/go-ethereum/common"
 "github.com/ethereum/go-ethereum/core/types"
-"go-eth/eth"
+	"go-eth/callsol"
 )
 
 func main() {
-if client, err := eth.Connect("http://10.0.0.148:8545"); err != nil {
+if client, err := eth1.ToolConnect("http://10.0.0.148:8545"); err != nil {
 fmt.Printf(err.Error())
 return
 } else {

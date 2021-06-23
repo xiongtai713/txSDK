@@ -3,13 +3,13 @@ package main
 import (
 "context"
 "fmt"
-"go-eth/eth"
+	"go-eth/callsol"
 "math/big"
 "time"
 )
 
 func main() {
-if client, err := eth.Connect("http://localhost:8545"); err != nil {
+if client, err := eth1.ToolConnect("http://localhost:8545"); err != nil {
 fmt.Printf(err.Error())
 return
 } else {

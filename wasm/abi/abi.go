@@ -84,7 +84,7 @@ func main() {
 	}
 	client, err := eth.Connect(host)
 	if err != nil {
-		fmt.Println("Connect err", err)
+		fmt.Println("ToolConnect err", err)
 	}
 	key, _ := crypto.HexToECDSA(privKeys)
 

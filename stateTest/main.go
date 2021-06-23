@@ -6,7 +6,7 @@ import (
 "github.com/ethereum/go-ethereum/common"
 "github.com/ethereum/go-ethereum/core/types"
 "github.com/ethereum/go-ethereum/crypto"
-"go-eth/eth"
+	"go-eth/callsol"
 "math/big"
 "time"
 )
@@ -15,10 +15,10 @@ func main() {
 
 	//proxy := "http://test.blockfree.pdx.ltd"
 	//token := "eyJhbGciOiJFUzI1NiJ9.eyJpYXQiOjE1NzQ4NDQwODcsIkZSRUUiOiJUUlVFIn0.lVPyP9xJ2iurl1_-UvdGXFWBGP65qS-NSqN5giUOpkZBvaQ8LO-X5MIP3-A1aUoV-0E3x9ucnMU6YCUUH89PCQ"
-	//client, err := eth.Connect("http://utopia-chain-739:8545", proxy, token)
-	client, err := eth.Connect("http://127.0.0.1:8547")
-	//client, err := eth.Connect("http://47.92.137.120:30402")
-	//client, err := eth.Connect("http://39.98.67.5:30402")
+	//client, err := eth1.ToolConnect("http://utopia-chain-739:8545", proxy, token)
+	client, err := eth1.ToolConnect("http://127.0.0.1:8547")
+	//client, err := eth1.ToolConnect("http://47.92.137.120:30402")
+	//client, err := eth1.ToolConnect("http://39.98.67.5:30402")
 
 	//if err != nil {
 	//	fmt.Printf("1", err.Error())

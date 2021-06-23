@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/hex"
 	"fmt"
 	"log"
 	"math/big"
@@ -18,26 +19,26 @@ const (
 	//host         = "http://39.100.34.235:30074"
 	//host         = "http://39.100.93.177:30036"
 	//host = "http://10.0.0.203:33333"
-	host1 = "http://192.168.3.6:8546"
-	//host1 = "http://127.0.0.1:8547"
-	//host          = "http://10.0.0.112:22222"
-	sendDuration  = time.Minute * 1
-	nonceTicker   = time.Minute * 10 //多久重新查一次nonce （note:此处应该大于1处， 否则ticker会不断执行）
-	sleepDuration = time.Minute * 1  //查完nonce后休眠时间（1处）
-	txNum         = -1
+	//host11 = "http://39.100.210.205:30178"
+	//host1 = "http://10.0.0.245:30100"
+	host1          = "http://127.0.0.1:8547"
+	sendDuration  = time.Minute * 100
+	nonceTicker   = time.Minute * 100 //多久重新查一次nonce （note:此处应该大于1处， 否则ticker会不断执行）
+	sleepDuration = time.Minute * 100 //查完nonce后休眠时间（1处）
+	txNum         = 10000
 )
 
 var privKeys = []string{
 	//"a9f1481564399443bb39188d3f8da55585c9238ab175010b81e7a28956559381", //7DE
-	//"d29ce71545474451d8292838d4a0680a8444e6e4c14da018b4a08345fb2bbb84",
+	"d29ce71545474451d8292838d4a0680a8444e6e4c14da018b4a08345fb2bbb84",
 	//"009f1dfe52be1015970d9087de0ad2a98f4c68f610711d1533aa21a71ccc8f4a", //from:0x00CFc66BBD69fb964df1C9782062D4282FfF0cda
 	//"69192206e447dbc8b6627d7beb540e6c606c5b94afa9ebc00734ff404a1e5617",
-
+	//"4cacb783dbf80ae08b61c4700c3ada34b92bf048117535cbf0066bb9821f977c",
 	//"d29ce71545474451d8292838d4a0680a8444e6e4c14da018b4a08345fb2bbb84", //086
 	//"72660cbaef2ca607751c0514922ca995a566f5bd508ccfae4896265db856d115", //sm2
 	//"e7bb5c0bc8456fe0c2af281fe5753095c5150fbdbd622776330cece60e9feaec",
 	//"5dc4c81695f4606394b535e44315f9a444b7f860f1951f4eb5eb8fdf59913b0a",
-	//新超给的私钥
+	////新超给的私钥
 	//"281ad87954531160ad1fc57800db50b6ff079b27d66e20218125d84446554592",
 	//"3f11dd8b4f14498c35030947dc34f87a13259fda566a6fa60091953a24dc71ae",
 	//"4b5965545ab5153b0c7a34df6d82e830113d94877329088f492d98a222b27c88",
@@ -49,10 +50,10 @@ var privKeys = []string{
 	//"03598508ee5aef3ac3d19b6e47f94377df44f447090918786df2464d31d0b751",
 	//"f5e166ecd28e2c0afdf7f764e9844588ec1b7a34c77c7be3b673f5a4d9b31f6a",
 	//"1598e1b4f6b2f911142fe5720554360bdd45c5487ff922e06930513c25c87577",
-
-
-
-	//补nonce
+	//
+	//"5e73687b6247da500b3d32b575d5cdecab996c245a5dc07e851b023656f1072f",
+	//
+	////补nonce
 	//"68d4fbe1493f5389a33980e5d2ac0090fe354b5d05e38b6b4034b0616d6f164",
 	//"6e4843c7bc72932e2b44b2836aa5eb224476ef353133892a39ad3cf5348ef900",
 	//"727ad32681d6d007e063e19a0ceb8aec38cd1d5c1a3b6889f569d34f094bf3af",
@@ -116,8 +117,7 @@ var privKeys = []string{
 	//"4d5eea8af958475b43b56fa28aa69b92fb4b94745cf526807327e0b59ccbc9c7",
 	//"5bc1aecd6f4e78cdf42be9689c27d9ac04e872944a8195365d9e729aa08b9e10",
 	//"48082d06aea944156312545b6dc5ab1d172fc8b3d775284f33dd57ad477bea40",
-	"1c23b0beb3a728940b2573c9274543e8ca454f0aceacd99d60929f80a1d331e4",
-
+	//"1c23b0beb3a728940b2573c9274543e8ca454f0aceacd99d60929f80a1d331e4",
 
 }
 
@@ -148,11 +148,11 @@ func main() {
 func sendTestTx(privKey, flag string, x int) {
 	//proxy := "http://10.0.0.241:9999"
 	//token := "eyJhbGciOiJFUzI1NiJ9.eyJpYXQiOjE1ODk5NzQ2NzIsIkZSRUUiOiJUUlVFIn0.sWYZ6awd8yRNX9iG5o7Ls4Uop5nfZrUtuprx9hwKxw2fS5zQtxunY11bccJ_h29VfnFMqyvaVvI9Tu3R0USlwQ"
-	//if client, err := eth.Connect("http://utopia-chain-1001:8545", proxy, token); err != nil {
+	//if client, err := eth1.Connect("http://utopia-chain-1001:8545", proxy, token); err != nil {
 	//if client, err := client2.Connect("http://127.0.0.1:8547"); err != nil {
-		if client, err := client2.Connect(host1); err != nil {
+	if client, err := client2.Connect(host1); err != nil {
 
-			//	if client, err := eth.Connect("http://10.0.0.219:33333"); err != nil {
+		//	if client, err := eth1.Connect("http://10.0.0.219:33333"); err != nil {
 		fmt.Printf(err.Error())
 		return
 	} else {
@@ -174,10 +174,16 @@ func sendTestTx(privKey, flag string, x int) {
 		////pbin, _ := new(big.Int).SetString(privKey, 16)
 		//pKey1 := sm2.InitKey(pbin)
 
+
+		compressedPubkey := crypto.CompressPubkey(&pKey.PublicKey)
+		fmt.Println("compressed pukey:", hex.EncodeToString(compressedPubkey))
+
+		fmt.Println("公钥",fmt.Sprintf("%x",crypto.FromECDSAPub(&pKey.PublicKey)))
+
 		from := crypto.PubkeyToAddress(pKey.PublicKey)
 		fmt.Printf("from:%s\n", from.String())
 		//privK: d6bf45db5f7e1209cdf58c0cca2f28516bdf4ce07cad211cf748f31874084b5e
-		if nonce, err := client.EthClient.NonceAt(context.TODO(), from,nil); err != nil {
+		if nonce, err := client.EthClient.NonceAt(context.TODO(), from, nil); err != nil {
 
 			//if nonce, err := client.EthClient.NonceAt(context.TODO(), from, nil); err != nil {
 			fmt.Printf("nonce err: %s", err.Error())
@@ -185,17 +191,17 @@ func sendTestTx(privKey, flag string, x int) {
 		} else {
 			fmt.Println("nonce", nonce)
 
-			amount := big.NewInt(0).Mul(big.NewInt(0), big.NewInt(1e18))
+			amount := big.NewInt(0).Mul(big.NewInt(10), big.NewInt(1e18))
 
 			//amount := big.NewInt(0).Mul(big.NewInt(1), big.NewInt(1e18))
 			gasLimit := uint64(21000)
-			gasPrice := new(big.Int).Mul(big.NewInt(1e9), big.NewInt(4000)) //todo 此处很重要，不可以太低，可能会报underprice错误，增大该值就没有问题了
+			gasPrice := new(big.Int).Mul(big.NewInt(1e9), big.NewInt(1000)) //todo 此处很重要，不可以太低，可能会报underprice错误，增大该值就没有问题了
 
 			timer := time.NewTimer(sendDuration)
 			ticker := time.NewTicker(nonceTicker)
 			log.Println(flag+"start:", time.Now().String())
 			i := 0
-			//nonce = 4161
+			//nonce = 235474
 			for {
 				select {
 				case <-timer.C:
@@ -219,11 +225,11 @@ func sendTestTx(privKey, flag string, x int) {
 					//rand.Seed(time.Now().Unix())
 					//n1 := rand.Int31n(9)
 					//n2 := rand.Int31n(9)
-					to := common.HexToAddress(fmt.Sprintf("0x08b299d855734914cd7b19eea60c84b%d256840%d", x, x+1))
-					//to := common.HexToAddress("0x48c60bdeed69477460127c28b27e43a7ad442b9a")
-					//fmt.Printf("to:%s\n", to.String())
+					//to := common.HexToAddress(fmt.Sprintf("0x08b299d855734914cd7b19eea60c84b%d256840%d", x, x+1))
+					to := common.HexToAddress("0x7de2a31d6ca36302ea7b7917c4fc5ef4c12913b6")
+					fmt.Printf("to:%s\n", to.String())
 					var data []byte
-					//for h := 0; h <= 1024; h++ {
+					//for h := 0; h <= 10240; h++ {
 					//	data = append(data, 1)
 					//}
 
@@ -231,8 +237,8 @@ func sendTestTx(privKey, flag string, x int) {
 					//tx := types.NewContractCreation(nonce, big.NewInt(0), gasLimit, gasPrice, nil)
 
 					//signer := types.HomesteadSigner{}
-					//signer := types.NewSm2Signer(big.NewInt(777))
-					signer := types.NewEIP155Signer(big.NewInt(738))
+					//signer := types.NewSm2Signer(big.NewInt(111))
+					signer := types.NewEIP155Signer(big.NewInt(777))
 
 					//sm := (*ecdsa.PrivateKey)(pKey1)
 					//signedTx, _ := types.SignTx(tx, signer, sm)

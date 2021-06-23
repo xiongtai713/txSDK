@@ -13,6 +13,7 @@ replace github.com/cc14514/go-certool => /Users/liu/code/pdx-chain/build/_deps/g
 replace github.com/tjfoc/gmsm => github.com/PDXbaap/gmsm v1.3.11
 
 require (
-	github.com/ethereum/go-ethereum v1.9.20
+	github.com/ethereum/go-ethereum v1.9.20 // indirect
+	github.com/golang/protobuf v1.3.3
 	pdx-chain v0.0.0-00010101000000-000000000000
 )

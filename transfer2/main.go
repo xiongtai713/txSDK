@@ -6,7 +6,7 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/crypto"
-	"go-eth/eth"
+	"go-eth/callsol"
 	"math/big"
 	"strconv"
 )
@@ -10020,7 +10020,7 @@ func main() {
 	//log.SetFlags(log.Lmicroseconds)
 	var nonce uint64
 	//var wg sync.WaitGroup
-	client, _ := eth.Connect("http://127.0.0.1:8547")
+	client, _ := eth1.ToolConnect("http://127.0.0.1:8547")
 	nonce = 1
 
 	//"d29ce71545474451d8292838d4a0680a8444e6e4c14da018b4a08345fb2bbb84",
@@ -10091,7 +10091,7 @@ func main() {
 
 }
 
-func sendTestTx(privKey1 string, flag string, client eth.Client, nonce uint64,to1 string) error{
+func sendTestTx(privKey1 string, flag string, client eth1.Client, nonce uint64,to1 string) error{
 
 	privKey3, _ := crypto.HexToECDSA(privKey1)
 	amount := big.NewInt(0).Mul(big.NewInt(10), big.NewInt(1))

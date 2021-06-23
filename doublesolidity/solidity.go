@@ -6,7 +6,7 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/crypto"
-	"go-eth/eth"
+	"go-eth/callsol"
 	"log"
 	"math/big"
 	"math/rand"
@@ -119,10 +119,10 @@ func main() {
 }
 
 func sendSolidityTx(contract, privKey string, flag string) {
-	//if client, err := eth.Connect("http://10.1.0.101:8546"); err != nil {
-	if client, err := eth.Connect(mynode); err != nil {
-		//if client, err := eth.Connect("http://10.0.0.124:8546"); err != nil {
-		//if client, err := eth.Connect("http://192.168.0.136:8545"); err != nil {
+	//if client, err := eth1.ToolConnect("http://10.1.0.101:8546"); err != nil {
+	if client, err := eth1.ToolConnect(mynode); err != nil {
+		//if client, err := eth1.ToolConnect("http://10.0.0.124:8546"); err != nil {
+		//if client, err := eth1.ToolConnect("http://192.168.0.136:8545"); err != nil {
 		fmt.Printf(flag + err.Error())
 		return
 	} else {

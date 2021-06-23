@@ -7,13 +7,13 @@ import (
 "github.com/ethereum/go-ethereum/common"
 "github.com/ethereum/go-ethereum/crypto/sha3"
 "github.com/golang/protobuf/proto"
-"go-eth/eth"
-"go-eth/eth/protos"
+	"go-eth/callsol"
+	"go-eth/callsol/protos"
 "time"
 )
 
 func main() {
-if client, err := eth.Connect("http://192.168.0.120:8546"); err != nil {
+if client, err := eth1.ToolConnect("http://192.168.0.120:8546"); err != nil {
 fmt.Printf(err.Error())
 return
 } else {

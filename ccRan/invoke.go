@@ -15,8 +15,8 @@ import (
 
 //0xce9d6b7ce0bcef24fca92ff330a759300435c12b801c753317db44760378af7b
 func main() {
-	//if client, err := client2.Connect("http://10.0.0.211:8545"); err != nil {
-	if client, err := client2.Connect("http://127.0.0.1:8547"); err != nil {
+	if client, err := client2.Connect("http://10.0.0.113:22222"); err != nil {
+	//if client, err := client2.Connect("http://127.0.0.1:8547"); err != nil {
 		fmt.Printf(err.Error())
 		return
 	} else {
@@ -74,7 +74,7 @@ func main() {
 
 				for i:=0;i<1;i++{
 					tx := types.NewTransaction(nonce, to, nil, gasLimit, gasPrice, data)
-					signer := types.NewEIP155Signer(big.NewInt(111))
+					signer := types.NewEIP155Signer(big.NewInt(777))
 
 					signedTx, _ := types.SignTx(tx, signer, privKey)
 					if txHash, err := client.SendRawTransaction(context.TODO(), signedTx); err != nil {

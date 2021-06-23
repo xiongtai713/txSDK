@@ -8,8 +8,8 @@ import (
 "github.com/ethereum/go-ethereum/crypto"
 "github.com/ethereum/go-ethereum/crypto/sha3"
 "github.com/golang/protobuf/proto"
-"go-eth/eth"
-"go-eth/eth/protos"
+	"go-eth/callsol"
+	"go-eth/callsol/protos"
 "log"
 "math/big"
 "math/rand"
@@ -84,8 +84,8 @@ wg.Wait()
 }
 
 func sendTestTx(contract, privKey, input, flag string) {
-//if client, err := eth.Connect("http://39.98.244.76:30165"); err != nil {
-if client, err := eth.Connect("http://127.0.0.1:8546"); err != nil {
+//if client, err := eth1.ToolConnect("http://39.98.244.76:30165"); err != nil {
+if client, err := eth1.ToolConnect("http://127.0.0.1:8546"); err != nil {
 
 fmt.Printf(flag + err.Error())
 return

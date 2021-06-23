@@ -8,13 +8,13 @@ import (
 "github.com/ethereum/go-ethereum/core/types"
 "github.com/ethereum/go-ethereum/crypto"
 "github.com/ethereum/go-ethereum/crypto/sha3"
-"go-eth/eth"
+  "go-eth/callsol"
 "math/big"
 )
 //0xce9d6b7ce0bcef24fca92ff330a759300435c12b801c753317db44760378af7b
 func main() {
-//if client, err := eth.Connect("http://10.0.0.155:8545"); err != nil {
-if client, err := eth.Connect("http://10.0.0.110:8545"); err != nil {
+//if client, err := eth1.ToolConnect("http://10.0.0.155:8545"); err != nil {
+if client, err := eth1.ToolConnect("http://10.0.0.110:8545"); err != nil {
 fmt.Printf(err.Error())
 return
 } else {

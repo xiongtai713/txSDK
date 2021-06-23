@@ -7,6 +7,7 @@ import (
 	"github.com/golang/protobuf/proto"
 	"io/ioutil"
 	"math/big"
+	ethereum "pdx-chain"
 	"pdx-chain/common"
 	"pdx-chain/core/types"
 	"pdx-chain/crypto"
@@ -23,9 +24,9 @@ const (
 
 //0xce9d6b7ce0bcef24fca92ff330a759300435c12b801c753317db44760378af7b
 func main() {
-	//if client, err := eth.Connect("http://10.0.0.155:8545"); err != nil {
-	//if client, err := eth.Connect("http://10.0.0.110:8545"); err != nil {
-	if client, err := client2.Connect("http://127.0.0.1:8547"); err != nil {
+	//if client, err := eth1.Connect("http://10.0.0.155:8545"); err != nil {
+	//if client, err := eth1.Connect("http://10.0.0.110:8545"); err != nil {
+	if client, err := client2.Connect("http://8.130.164.241:22222"); err != nil {
 	//	if client, err := client2.Connect("http://39.101.1.8:8545"); err != nil {
 		fmt.Printf(err.Error())
 		return
@@ -51,8 +52,9 @@ func main() {
 				fmt.Printf(err.Error())
 				return
 			} else {
+
 				amount := big.NewInt(0)
-				gasLimit := uint64(4712388)
+
 				gasPrice := big.NewInt(2000000000)
 				//gasPrice := big.NewInt(43100000000000)
 
@@ -110,26 +112,46 @@ func main() {
 					return
 				}
 
-				fmt.Println("nounce:", nonce)
-				tx := types.NewTransaction(nonce, to, amount, gasLimit, gasPrice, data)
-				// EIP155 signer
-				signer := types.NewEIP155Signer(big.NewInt(111))
-				//signer := types.HomesteadSigner{}
-				signedTx, _ := types.SignTx(tx, signer, privKey)
-				// client.EthClient.SendTransaction(context.TODO(), signedTx)
-				if txHash, err := client.SendRawTransaction(context.TODO(), signedTx); err != nil {
-					fmt.Printf("send raw tx:%s", err.Error())
-				} else {
-					fmt.Printf("Transaction hash: %s\n", txHash.String())
-					/*receiptChan := make(chan *types.Receipt)
-					  fmt.Printf("Transaction hash: %s\n", txHash.String())
-					  _, isPending, _ := client.EthClient.TransactionByHash(context.TODO(), txHash)
-					  fmt.Printf("Transaction pending: %v\n", isPending)
-					  // check transaction receipt
-					  client.CheckTransaction(context.TODO(), receiptChan, txHash, 1)
-					  receipt := <-receiptChan
-					  fmt.Printf("Transaction status: %v\n", receipt.Status)*/
+				msg := ethereum.CallMsg{
+					From: from,
+					To:   &to,
+					Data: data, //code =wasm code1 =sol
 				}
+
+				gas, err := client.EthClient.EstimateGas(context.Background(), msg)
+				if err != nil {
+					fmt.Println("预估的gas err", err)
+					return
+				}
+
+				fmt.Println("预估的gas",gas)
+
+				gasLimit := gas
+
+				for i:=0;i<40;i++{
+					fmt.Println("nounce:", nonce)
+					tx := types.NewTransaction(nonce, to, amount, gasLimit, gasPrice, data)
+					// EIP155 signer
+					signer := types.NewEIP155Signer(big.NewInt(777))
+					//signer := types.HomesteadSigner{}
+					signedTx, _ := types.SignTx(tx, signer, privKey)
+					// client.EthClient.SendTransaction(context.TODO(), signedTx)
+					if txHash, err := client.SendRawTransaction(context.TODO(), signedTx); err != nil {
+						fmt.Printf("send raw tx:%s", err.Error())
+					} else {
+						fmt.Printf("Transaction hash: %s\n", txHash.String())
+						/*receiptChan := make(chan *types.Receipt)
+						  fmt.Printf("Transaction hash: %s\n", txHash.String())
+						  _, isPending, _ := client.EthClient.TransactionByHash(context.TODO(), txHash)
+						  fmt.Printf("Transaction pending: %v\n", isPending)
+						  // check transaction receipt
+						  client.CheckTransaction(context.TODO(), receiptChan, txHash, 1)
+						  receipt := <-receiptChan
+						  fmt.Printf("Transaction status: %v\n", receipt.Status)*/
+					}
+					nonce++
+				}
+
 			}
 		}
 	}
